@@ -9,20 +9,18 @@ const Home = () => {
           base: `
             "nav"
             "map"
-            "input"
-            "output"
+            "info"
             "footer"
           `,
           md: `
             "nav nav"
-            "map input"
-            "map output"
+            "map info"
             "footer footer"
           `,
         }}
         gridTemplateRows={{
-          base: '50px 1fr 1fr 1fr 30px',
-          md: '50px 1fr 1fr 30px',
+          base: '50px 1fr 1fr 30px',
+          md: '50px 1fr 30px',
         }}
         gridTemplateColumns={{
           base: '1fr',
@@ -39,13 +37,9 @@ const Home = () => {
         <GridItem area={'map'} minH={'500px'}>
           <Map />
         </GridItem>
-        <GridItem area={'input'}>
+        <GridItem area={'info'}>
           {/* <Input /> */}
-          Input
-        </GridItem>
-        <GridItem area={'output'}>
-          {/* <Output /> */}
-          Output
+          Info
         </GridItem>
         <GridItem pl='2' bg='blue.300' area={'footer'}>
           Footer
