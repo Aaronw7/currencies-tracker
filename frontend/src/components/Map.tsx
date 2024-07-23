@@ -11,9 +11,6 @@ const currencyAbbreviations = [
 const Map = () => {
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const map = useRef<mapboxgl.Map | null>(null);
-  const hoveredStateId = useRef<Record<string, string | null>>(
-    Object.fromEntries(currencyAbbreviations.map((currency) => [currency, null]))
-  );
 
   useEffect(() => {
     if (map.current || !mapContainer.current) return;
