@@ -1,5 +1,6 @@
 import { Box, Grid, GridItem } from '@chakra-ui/react';
 import Map from '../components/Map';
+import Info from '../components/Info';
 
 const Home = () => {
   return (
@@ -35,11 +36,12 @@ const Home = () => {
           Nav
         </GridItem>
         <GridItem area={'map'} minH={'500px'}>
-          <Map />
+          {/* <Map /> */}
+          Map
         </GridItem>
         <GridItem area={'info'}>
           {/* <Input /> */}
-          Info
+          <Info />
         </GridItem>
         <GridItem pl='2' bg='blue.300' area={'footer'}>
           Footer
