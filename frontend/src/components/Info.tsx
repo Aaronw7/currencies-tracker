@@ -26,21 +26,23 @@ const Info = () => {
     fetchCurrencies();
   }, []);
 
+  const handleCurrencyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCurrency(event.target.value);
+  };
+
   const formatRate = (rate: number) => {
     return rate.toPrecision(5);
   };
 
-  console.log('here are the currencies: ', currencies);
-
   return (
-    <Flex direction={'column'} justifyContent={'space-between'} h={'100%'} maxH={'100%'} overflowY={'scroll'} p={4} bg="gray.100" borderRadius="md" boxShadow="md">
-      <Select size='sm' border='1px' borderColor='gray.500' mb={3}>
+    <Flex direction={'column'} justifyContent={'center'} h={'100%'} p={4} bg="gray.100" borderRadius="md" boxShadow="md">
+      <Select size='sm' border='1px' borderColor='gray.500' mb={6} onChange={handleCurrencyChange}>
         {currencies.map((choice) => (
           <option value={choice.code} key={choice.code}>{choice.code}</option>
         ))}
       </Select>
-      <Box flex={'1'} w={'100%'} h={'100%'} overflowY={'scroll'}>
-        <TableContainer w={'100%'} h={'100%'}>
+      <Box flex={1} w={'100%'} h={'100%'} maxH={'500px'} overflowY={'scroll'}>
+        <TableContainer>
           <Table variant='simple' size='sm'>
             <TableCaption>Imperial to metric conversion factors</TableCaption>
             <Thead>
@@ -55,7 +57,7 @@ const Info = () => {
                 <Th />
               </Tr>
             </Thead>
-            <Tbody>
+            <Tbody overflowY={'scroll'}>
               {currencies.map((data) => (
                 <Tr key={data.code}>
                   <Td>{data.code}</Td>
@@ -64,7 +66,7 @@ const Info = () => {
                 </Tr>
               ))}
             </Tbody>
-            <Tfoot>
+            <Tfoot position={'sticky'} bottom={0}>
               <Tr>
                 <Th>Currency</Th>
                 <Th isNumeric>Amount</Th>
