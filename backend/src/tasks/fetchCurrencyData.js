@@ -10,7 +10,6 @@ const fetchCurrencyData = async () => {
         apikey: process.env.FREECURRENCYAPI_KEY,
       },
     });
-    console.log('this is the response: ', response.data); // Log the entire response to understand its structure
     const data = response.data.data;
     await Currency.create({
       date: new Date(),
