@@ -1,6 +1,8 @@
 const express = require('express')
 const cors = require('cors');
-const sequelize = require('./config/database');
+const sequelize = require('./database');
+const routes = require('./routes');
+const scheduleFetchCurrencyData = require('./tasks/fetchCurrencyData');
 require('dotenv').config();
 
 const app = express()
@@ -8,14 +10,14 @@ const PORT = process.env.PORT || 4000;
 app.use(cors());
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+// Routes
+app.use('/currency', routes);
 
 sequelize.sync().then(() => {
   console.log('Database connected');
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
+    scheduleFetchCurrencyData();
   });
 }).catch(err => {
   console.error('Failed to connect to the database', err);
