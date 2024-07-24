@@ -1,8 +1,14 @@
 const Currency = require("./models/Currency");
 const asyncHandler = require("express-async-handler");
 
-// Display list of all currencies
-exports.saveCurrencies = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: Currency List")
+// get latest currency
+exports.getLatestCurrencies = asyncHandler(async (req, res, next) => {
+  try {
+    const latestData = await Currency.findOne({
+      order: [['date', 'DESC']],
+    });
+    res.json(latestData);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
 });
-
