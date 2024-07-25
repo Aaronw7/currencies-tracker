@@ -30,7 +30,7 @@ exports.getPreviousCurrency = asyncHandler(async (req, res, next) => {
     });
 
     if (data) {
-      res.json(data['dataValues']['rates']);
+      res.json(data['dataValues']);
     } else {
       const specificData = await Currency.findOne({
         where: {
@@ -39,7 +39,7 @@ exports.getPreviousCurrency = asyncHandler(async (req, res, next) => {
       });
 
       if (specificData) {
-        res.json(specificData['dataValues']['rates']);
+        res.json(specificData['dataValues']);
       } else {
         res.status(404).json({ message: 'No data found for the specified date' });
       }
