@@ -30,7 +30,6 @@ exports.getPreviousCurrency = asyncHandler(async (req, res, next) => {
     });
 
     if (data) {
-      console.log('this is working!', data['dataValues']['rates'])
       res.json(data['dataValues']['rates']);
     } else {
       const specificData = await Currency.findOne({
