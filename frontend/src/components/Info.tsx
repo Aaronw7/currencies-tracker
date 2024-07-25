@@ -9,15 +9,30 @@ interface Currency {
 
 const Info = () => {
   const [currencies, setCurrencies] = useState<Currency[]>([]);
+  const [previousCurrencies, setPreviousCurrencies] = useState<Currency[]>([]);
   const [selectedCurrency, setSelectedCurrency] = useState('USD');
 
   useEffect(() => {
     const fetchCurrencies = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/currency/latest');
-        const { rates } = response.data;
-        const formattedRates: Currency[] = Object.entries(rates).map(([code, rate]) => ({ code, rate: rate as number }));
-        setCurrencies(formattedRates);
+        // const response = await axios.get('http://localhost:4000/currency/latest');
+        // const { rates } = response.data;
+        // const formattedRates: Currency[] = Object.entries(rates).map(([code, rate]) => ({ code, rate: rate as number }));
+        // setCurrencies(formattedRates);
+
+        const [latestResponse, previousResponse] = await Promise.all([
+          axios.get('http://localhost:4000/currency/latest'),
+          axios.get('http://localhost:4000/currency/previous')
+        ]);
+
+        const { rates: latestRates } = latestResponse.data;
+        const formattedLatestRates: Currency[] = Object.entries(latestRates).map(([code, rate]) => ({ code, rate: rate as number }));
+        setCurrencies(formattedLatestRates);
+
+        const { rates: previousRates } = previousResponse.data;
+        const formattedPreviousRates: Currency[] = Object.entries(previousRates).map(([code, rate]) => ({ code, rate: rate as number }));
+        setPreviousCurrencies(formattedPreviousRates);
+
       } catch (error) {
         console.error('Failed to fetch currencies', error);
       }
@@ -26,12 +41,26 @@ const Info = () => {
     fetchCurrencies();
   }, []);
 
+  console.log('this is the current: ', currencies);
+  console.log('this is the previous: ', previousCurrencies);
+
   const handleCurrencyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCurrency(event.target.value);
   };
 
   const formatRate = (rate: number) => {
     return rate.toPrecision(5);
+  };
+
+  const formatChange = (code: string) => {
+    const currentRate = currencies.find(currency => currency.code === code)?.rate;
+    const previousRate = previousCurrencies.find(currency => currency.code === code)?.rate;
+
+    if (currentRate !== undefined && previousRate !== undefined) {
+      const change = ((currentRate - previousRate) / previousRate) * 100;
+      return `${change.toFixed(2)}%`;
+    }
+    return 'N/A';
   };
 
   return (
@@ -61,7 +90,7 @@ const Info = () => {
                 <Tr key={data.code}>
                   <Td>{data.code}</Td>
                   <Td isNumeric>{formatRate(data.rate)}</Td>
-                  <Td isNumeric>{formatRate(data.rate)}</Td>
+                  <Td isNumeric>{formatChange(data.code)}</Td>
                 </Tr>
               ))}
             </Tbody>

@@ -36,11 +36,9 @@ const Home = () => {
           Nav
         </GridItem>
         <GridItem area={'map'} minH={'500px'}>
-          {/* <Map /> */}
-          Map
+          <Map />
         </GridItem>
         <GridItem area={'info'}>
-          {/* <Input /> */}
           <Info />
         </GridItem>
         <GridItem pl='2' bg='blue.300' area={'footer'}>
