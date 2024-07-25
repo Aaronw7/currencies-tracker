@@ -55,9 +55,9 @@ const Info = () => {
 
     if (currentRate !== undefined && previousRate !== undefined) {
       const change = ((currentRate - previousRate) / previousRate) * 100;
-      return `${change.toFixed(2)}%`;
+      return change;
     }
-    return 'N/A';
+    return 0;
   };
 
   return (
@@ -73,7 +73,7 @@ const Info = () => {
             <Thead>
               <Tr>
                 <Th>Currency</Th>
-                <Th isNumeric>Amount</Th>
+                <Th isNumeric>Rate</Th>
                 <Th isNumeric>Change</Th>
               </Tr>
               <Tr bg={'black'}>
@@ -83,18 +83,23 @@ const Info = () => {
               </Tr>
             </Thead>
             <Tbody overflowY={'scroll'}>
-              {currencies.map((data) => (
-                <Tr key={data.code}>
-                  <Td>{data.code}</Td>
-                  <Td isNumeric>{formatRate(data.rate)}</Td>
-                  <Td isNumeric>{formatChange(data.code)}</Td>
-                </Tr>
-              ))}
+              {currencies.map((data) => {
+                const change = formatChange(data.code);
+                return (
+                  <Tr key={data.code}>
+                    <Td>{data.code}</Td>
+                    <Td isNumeric>{formatRate(data.rate)}</Td>
+                    <Td color={change > 0.01 ? 'green.500' : change < -0.01 ? 'red.500' : 'gray.500'} isNumeric>
+                      {`${change.toFixed(2)}%`}
+                    </Td>
+                  </Tr>
+                );
+              })}
             </Tbody>
             <Tfoot position={'sticky'} bottom={0}>
               <Tr>
                 <Th>Currency</Th>
-                <Th isNumeric>Amount</Th>
+                <Th isNumeric>Rate</Th>
                 <Th isNumeric>Change</Th>
               </Tr>
             </Tfoot>
