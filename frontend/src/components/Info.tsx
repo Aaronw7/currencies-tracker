@@ -15,11 +15,6 @@ const Info = () => {
   useEffect(() => {
     const fetchCurrencies = async () => {
       try {
-        // const response = await axios.get('http://localhost:4000/currency/latest');
-        // const { rates } = response.data;
-        // const formattedRates: Currency[] = Object.entries(rates).map(([code, rate]) => ({ code, rate: rate as number }));
-        // setCurrencies(formattedRates);
-
         const [latestResponse, previousResponse] = await Promise.all([
           axios.get('http://localhost:4000/currency/latest'),
           axios.get('http://localhost:4000/currency/previous')
