@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Flex, Box, Select, TableContainer, Table, TableCaption, Thead, Tbody, Tr, Th, Td, Tfoot } from '@chakra-ui/react';
+import { Flex, Box, Select, TableContainer, Table, Thead, Tbody, Tr, Th, Td, Tfoot } from '@chakra-ui/react';
 import axios from 'axios';
 
 interface Currency {
@@ -44,16 +44,15 @@ const Info = () => {
       <Box flex={1} w={'100%'} h={'100%'} maxH={'500px'} overflowY={'scroll'}>
         <TableContainer>
           <Table variant='simple' size='sm'>
-            <TableCaption>Imperial to metric conversion factors</TableCaption>
             <Thead>
               <Tr>
                 <Th>Currency</Th>
                 <Th isNumeric>Amount</Th>
                 <Th isNumeric>Change</Th>
               </Tr>
-              <Tr>
-                <Th>{selectedCurrency}</Th>
-                <Th isNumeric>1</Th>
+              <Tr bg={'black'}>
+                <Th textColor={'#86cf72'}>{selectedCurrency}</Th>
+                <Th textColor={'#86cf72'} isNumeric>1</Th>
                 <Th />
               </Tr>
             </Thead>
