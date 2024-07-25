@@ -41,9 +41,6 @@ const Info = () => {
     fetchCurrencies();
   }, []);
 
-  console.log('this is the current: ', currencies);
-  console.log('this is the previous: ', previousCurrencies);
-
   const handleCurrencyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCurrency(event.target.value);
   };
