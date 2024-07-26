@@ -36,7 +36,7 @@ const Info: React.FC<InfoProps> = ({ currencies, previousCurrencies, selectedCur
   return (
     <Flex direction={'column'} justifyContent={'center'} h={'100%'} p={4} bg="#ffffff" borderRadius="md" boxShadow="md">
       <Text>Select Currency</Text>
-      <Select size='sm' border='1px' borderColor='gray.500' mb={6} onChange={handleCurrencyChange} value={selectedCurrency}>
+      <Select size='sm' border='1px' borderColor='gray.500' mb={4} onChange={handleCurrencyChange} value={selectedCurrency}>
         {currencies.map((choice) => (
           <option value={choice.code} key={choice.code}>{choice.code}</option>
         ))}
