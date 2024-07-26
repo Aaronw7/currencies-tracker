@@ -88,11 +88,11 @@ const Info: React.FC<InfoProps> = ({ currencies, previousCurrencies, selectedCur
                     <Td>{data.code}</Td>
                     <Td textAlign={'right'}>{formatRate(data.rate)}</Td>
                     <Td color={
-                      Number(change) >= 0.5 ? '#53bc53' :
-                      Number(change) >= 0.01 ? '#86cf72' :
-                      Number(change) <= -0.5 ? '#df2334' :
-                      Number(change) <= -0.01 ? '#cf7286' :
-                      'gray.500'}
+                      Number(change) >= 0.5 ? '#3e9e3e' :
+                      Number(change) >= 0.01 ? '#65c24c' :
+                      Number(change) <= -0.5 ? '#b51a28' :
+                      Number(change) <= -0.01 ? '#c24c65' :
+                      '#a3a3a3'}
                       textAlign={'right'}
                     >
                       {`${change}%`}
