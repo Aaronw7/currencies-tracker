@@ -24,8 +24,8 @@ const Home = () => {
     const fetchCurrencies = async () => {
       try {
         const [latestResponse, previousResponse] = await Promise.all([
-          axios.get('http://localhost:4000/currency/latest'),
-          axios.get('http://localhost:4000/currency/previous')
+          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/currency/latest`),
+          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/currency/previous`)
         ]);
 
         const { rates: latestRates } = latestResponse.data;
