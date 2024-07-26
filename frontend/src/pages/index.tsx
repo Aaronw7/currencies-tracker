@@ -67,13 +67,13 @@ const Home = () => {
       <Grid
         templateAreas={{
           base: `
-            "nav"
+            "header"
             "map"
             "info"
             "footer"
           `,
           md: `
-            "nav nav"
+            "header header"
             "map info"
             "footer footer"
           `,
@@ -91,8 +91,8 @@ const Home = () => {
         color='blackAlpha.700'
         fontWeight='bold'
       >
-        <GridItem pl='2' bg='orange.300' area={'nav'}>
-          Nav
+        <GridItem pl='2' bg='#0a146e' area={'header'}>
+          Header
         </GridItem>
         <GridItem area={'map'} minH={'500px'}>
           <Map currencies={adjustedCurrencies} previousCurrencies={adjustedPreviousCurrencies} />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Box, Select, TableContainer, Table, Thead, Tbody, Tr, Th, Td, Tfoot } from '@chakra-ui/react';
+import { Flex, Box, Select, TableContainer, Table, Thead, Tbody, Tr, Th, Td, Tfoot, Text } from '@chakra-ui/react';
 
 interface Currency {
   code: string;
@@ -28,48 +28,73 @@ const Info: React.FC<InfoProps> = ({ currencies, previousCurrencies, selectedCur
 
     if (currentRate !== undefined && previousRate !== undefined) {
       const change = ((currentRate - previousRate) / previousRate) * 100;
-      return change;
+      return change.toFixed(2);
     }
     return 0;
   };
 
   return (
-    <Flex direction={'column'} justifyContent={'center'} h={'100%'} p={4} bg="gray.100" borderRadius="md" boxShadow="md">
-      <Select size='sm' border='1px' borderColor='gray.500' mb={6} onChange={handleCurrencyChange} placeholder={selectedCurrency}>
+    <Flex direction={'column'} justifyContent={'center'} h={'100%'} p={4} bg="#ffffff" borderRadius="md" boxShadow="md">
+      <Text>Select Currency</Text>
+      <Select size='sm' border='1px' borderColor='gray.500' mb={6} onChange={handleCurrencyChange} value={selectedCurrency}>
         {currencies.map((choice) => (
           <option value={choice.code} key={choice.code}>{choice.code}</option>
         ))}
       </Select>
-      <Box flex={1} w={'100%'} h={'100%'} maxH={'500px'} overflowY={'scroll'}>
-        <TableContainer>
-          <Table variant='simple' size='sm'>
-            <Thead>
+      <Box
+        flex={1}
+        w={'100%'}
+        h={'100%'}
+        maxH={'500px'}
+        border={'1px'}
+        borderColor={'#000000'}
+        borderRadius={'5px'}
+        overflow={'hidden'}
+      >
+        <TableContainer
+          h={'100%'}
+          overflowY={'scroll'}
+          css={{
+            '&::-webkit-scrollbar': { display: 'none' },
+            '-ms-overflow-style': 'none',
+            'scrollbar-width': 'none'
+          }}
+        >
+          <Table variant='unstyled' size='sm'>
+            <Thead position="sticky" top={0} zIndex={1} bg={'#ffffff'}>
               <Tr>
                 <Th>Currency</Th>
-                <Th isNumeric>Rate</Th>
-                <Th isNumeric>Change</Th>
+                <Th textAlign={'right'}>Rate</Th>
+                <Th textAlign={'right'}>Change</Th>
               </Tr>
-              <Tr bg={'black'}>
-                <Th textColor={'green.500'}>{selectedCurrency}</Th>
-                <Th textColor={'green.500'} isNumeric>1</Th>
+              <Tr borderBottom={'1px'} bg={'#0a146e'}>
+                <Th textColor={'#ffffff'}>{selectedCurrency}</Th>
+                <Th textColor={'#ffffff'} textAlign={'right'}>1</Th>
                 <Th />
               </Tr>
             </Thead>
-            <Tbody overflowY={'scroll'}>
+            <Tbody>
               {currencies.map((data) => {
                 const change = formatChange(data.code);
                 return (
                   <Tr key={data.code}>
                     <Td>{data.code}</Td>
-                    <Td isNumeric>{formatRate(data.rate)}</Td>
-                    <Td color={change > 0.01 ? 'green.500' : change < -0.01 ? 'red.500' : 'gray.500'} isNumeric>
-                      {`${change.toFixed(2)}%`}
+                    <Td textAlign={'right'}>{formatRate(data.rate)}</Td>
+                    <Td color={
+                      Number(change) >= 0.5 ? '#53bc53' :
+                      Number(change) >= 0.01 ? '#86cf72' :
+                      Number(change) <= -0.5 ? '#df2334' :
+                      Number(change) <= -0.01 ? '#cf7286' :
+                      'gray.500'}
+                      textAlign={'right'}
+                    >
+                      {`${change}%`}
                     </Td>
                   </Tr>
                 );
               })}
             </Tbody>
-            <Tfoot position={'sticky'} bottom={0}>
+            <Tfoot borderTop={'1px'}>
               <Tr>
                 <Th>Currency</Th>
                 <Th isNumeric>Rate</Th>

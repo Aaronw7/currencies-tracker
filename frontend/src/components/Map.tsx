@@ -35,14 +35,19 @@ const Map: React.FC<MapProps> = ({ currencies, previousCurrencies }) => {
       const change = formatChange(currency.code);
       let color = '#bdbdbd';
       let hoverColor = '#a3a3a3'
-      if (change > 0.01) {
-        color = '#86cf72',
-        hoverColor = '#65c24c'
-      } // Green for positive change
-      else if (change < -0.01) {
+      if (change > 0.5) {
+        color = '#53bc53';
+        hoverColor = '#3e9e3e';
+      } else if (change > 0.01) {
+        color = '#86cf72';
+        hoverColor = '#65c24c';
+      } else if (change < -0.5) {
+        color = '#df2334';
+        hoverColor = '#b51a28';
+      } else if (change < -0.01) {
         color = '#cf7286';
-        hoverColor = '#c24c65'
-      } // Red for negative change
+        hoverColor = '#c24c65';
+      }
       return {
         id: currency.code,
         color: color,
