@@ -4,6 +4,7 @@ import axios from 'axios';
 import Header from '@/components/Header';
 import Map from '@/components/Map';
 import Info from '@/components/Info';
+import Footer from '@/components/Footer';
 
 interface Currency {
   code: string;
@@ -64,7 +65,7 @@ const Home = () => {
   }, [currencies, previousCurrencies, selectedCurrency]);
 
   return (
-    <Box w={'100vw'} h={'100vh'} p={4}>
+    <Box w={'100vw'} h={'100vh'} p={3} bg={'#000000'}>
       <Grid
         templateAreas={{
           base: `
@@ -80,8 +81,8 @@ const Home = () => {
           `,
         }}
         gridTemplateRows={{
-          base: '80px 1fr 1fr 30px',
-          md: '50px 1fr 30px',
+          base: '80px 1fr 1fr 35px',
+          md: '50px 1fr 35px',
         }}
         gridTemplateColumns={{
           base: '1fr',
@@ -101,8 +102,8 @@ const Home = () => {
         <GridItem area={'info'}>
           <Info currencies={adjustedCurrencies} previousCurrencies={adjustedPreviousCurrencies} selectedCurrency={selectedCurrency} setSelectedCurrency={setSelectedCurrency}/>
         </GridItem>
-        <GridItem pl='2' bg='blue.300' area={'footer'}>
-          Footer
+        <GridItem area={'footer'}>
+          <Footer />
         </GridItem>
       </Grid>
     </Box>
