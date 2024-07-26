@@ -60,7 +60,7 @@ const Map: React.FC<MapProps> = ({ currencies, previousCurrencies }) => {
 
   useEffect(() => {
     // if (layers.length === 0 || map.current || !mapContainer.current) return;
-    if (!mapContainer.current) return;
+    if (layers.length === 0 || !mapContainer.current) return;
 
     const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
     const isMobile = window.innerWidth < rootFontSize * 48;
