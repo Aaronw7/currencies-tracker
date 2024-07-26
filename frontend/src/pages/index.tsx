@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Grid, GridItem } from '@chakra-ui/react';
 import axios from 'axios';
-import Map from '../components/Map';
-import Info from '../components/Info';
+import Header from '@/components/Header';
+import Map from '@/components/Map';
+import Info from '@/components/Info';
 
 interface Currency {
   code: string;
@@ -79,7 +80,7 @@ const Home = () => {
           `,
         }}
         gridTemplateRows={{
-          base: '50px 1fr 1fr 30px',
+          base: '80px 1fr 1fr 30px',
           md: '50px 1fr 30px',
         }}
         gridTemplateColumns={{
@@ -91,10 +92,10 @@ const Home = () => {
         color='blackAlpha.700'
         fontWeight='bold'
       >
-        <GridItem pl='2' bg='#0a146e' area={'header'}>
-          Header
+        <GridItem area={'header'}>
+          <Header />
         </GridItem>
-        <GridItem area={'map'} minH={'500px'}>
+        <GridItem area={'map'} minH={{ base: '250px', md: '500px' }}>
           <Map currencies={adjustedCurrencies} previousCurrencies={adjustedPreviousCurrencies} />
         </GridItem>
         <GridItem area={'info'}>
