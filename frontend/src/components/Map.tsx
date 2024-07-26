@@ -62,11 +62,16 @@ const Map: React.FC<MapProps> = ({ currencies, previousCurrencies }) => {
     // if (layers.length === 0 || map.current || !mapContainer.current) return;
     if (!mapContainer.current) return;
 
+    const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    const isMobile = window.innerWidth < rootFontSize * 48;
+    const center: [number, number] = isMobile ? [-35, 30] : [-20, 20];
+    const zoom = isMobile ? 0 : 1;
+
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/aaronw7/clyxz7fdy009301r7el2m4bzl',
-      center: [-30, 30],
-      zoom: 2,
+      center: center,
+      zoom: zoom,
       attributionControl: false,
     });
 
