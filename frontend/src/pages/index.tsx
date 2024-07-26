@@ -65,7 +65,7 @@ const Home = () => {
   }, [currencies, previousCurrencies, selectedCurrency]);
 
   return (
-    <Box w={'100vw'} h={'100vh'} p={3} bg={'#000000'}>
+    <Box w={'100vw'} h={'100vh'} p={3} bg={'#202020'}>
       <Grid
         templateAreas={{
           base: `

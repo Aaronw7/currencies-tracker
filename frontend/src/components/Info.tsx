@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Box, Select, TableContainer, Table, Thead, Tbody, Tr, Th, Td, Tfoot, Text } from '@chakra-ui/react';
+import { Flex, Box, Select, TableContainer, Table, Thead, Tbody, Tr, Th, Td, Tfoot, Text, Heading } from '@chakra-ui/react';
 
 interface Currency {
   code: string;
@@ -35,6 +35,10 @@ const Info: React.FC<InfoProps> = ({ currencies, previousCurrencies, selectedCur
 
   return (
     <Flex direction={'column'} justifyContent={'center'} h={'100%'} p={4} bg="#ffffff" borderRadius="md" boxShadow="md">
+      <Heading size={{ base: 'md', md: 'md' }} mb={4}>
+        <Box as='span' color={'#0a146e'} fontSize={'xxx-large'}>32 </Box>
+        Popular Currencies
+      </Heading>
       <Text>Select Currency</Text>
       <Select size='sm' border='1px' borderColor='gray.500' mb={4} onChange={handleCurrencyChange} value={selectedCurrency}>
         {currencies.map((choice) => (

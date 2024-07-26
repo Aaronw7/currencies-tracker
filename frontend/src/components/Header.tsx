@@ -11,7 +11,7 @@ const Header = () => {
       bg={'#0a146e'}
       p={2}
     >
-      <Heading color={'#ffffff'}>Currency Converter</Heading>
+      <Heading color={'#ffffff'}>CURRENCY CONVERTER</Heading>
       <Text color={'#ffffff'} mt={{ base: 0, md: 5 }}>Updated Daily</Text>
     </Flex>
   );
