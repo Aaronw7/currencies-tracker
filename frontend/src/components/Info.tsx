@@ -1,41 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Flex, Box, Select, TableContainer, Table, Thead, Tbody, Tr, Th, Td, Tfoot } from '@chakra-ui/react';
-import axios from 'axios';
 
 interface Currency {
   code: string;
   rate: number;
 }
 
-const Info = () => {
-  const [currencies, setCurrencies] = useState<Currency[]>([]);
-  const [previousCurrencies, setPreviousCurrencies] = useState<Currency[]>([]);
-  const [selectedCurrency, setSelectedCurrency] = useState('USD');
+interface InfoProps {
+  currencies: Currency[];
+  previousCurrencies: Currency[];
+  selectedCurrency: string;
+  setSelectedCurrency:  (value: string) => void
+}
 
-  useEffect(() => {
-    const fetchCurrencies = async () => {
-      try {
-        const [latestResponse, previousResponse] = await Promise.all([
-          axios.get('http://localhost:4000/currency/latest'),
-          axios.get('http://localhost:4000/currency/previous')
-        ]);
-
-        const { rates: latestRates } = latestResponse.data;
-        const formattedLatestRates: Currency[] = Object.entries(latestRates).map(([code, rate]) => ({ code, rate: rate as number }));
-        setCurrencies(formattedLatestRates);
-
-        const { rates: previousRates } = previousResponse.data;
-        const formattedPreviousRates: Currency[] = Object.entries(previousRates).map(([code, rate]) => ({ code, rate: rate as number }));
-        setPreviousCurrencies(formattedPreviousRates);
-
-      } catch (error) {
-        console.error('Failed to fetch currencies', error);
-      }
-    };
-
-    fetchCurrencies();
-  }, []);
-
+const Info: React.FC<InfoProps> = ({ currencies, previousCurrencies, selectedCurrency, setSelectedCurrency }) => {
   const handleCurrencyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCurrency(event.target.value);
   };
@@ -50,6 +28,9 @@ const Info = () => {
 
     if (currentRate !== undefined && previousRate !== undefined) {
       const change = ((currentRate - previousRate) / previousRate) * 100;
+
+      console.log(code, previousRate, currentRate, change);
+
       return change;
     }
     return 0;
@@ -57,7 +38,7 @@ const Info = () => {
 
   return (
     <Flex direction={'column'} justifyContent={'center'} h={'100%'} p={4} bg="gray.100" borderRadius="md" boxShadow="md">
-      <Select size='sm' border='1px' borderColor='gray.500' mb={6} onChange={handleCurrencyChange}>
+      <Select size='sm' border='1px' borderColor='gray.500' mb={6} onChange={handleCurrencyChange} placeholder={selectedCurrency}>
         {currencies.map((choice) => (
           <option value={choice.code} key={choice.code}>{choice.code}</option>
         ))}
@@ -72,8 +53,8 @@ const Info = () => {
                 <Th isNumeric>Change</Th>
               </Tr>
               <Tr bg={'black'}>
-                <Th textColor={'#86cf72'}>{selectedCurrency}</Th>
-                <Th textColor={'#86cf72'} isNumeric>1</Th>
+                <Th textColor={'green.500'}>{selectedCurrency}</Th>
+                <Th textColor={'green.500'} isNumeric>1</Th>
                 <Th />
               </Tr>
             </Thead>
