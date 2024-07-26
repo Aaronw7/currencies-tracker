@@ -97,8 +97,8 @@ const Info: React.FC<InfoProps> = ({ currencies, previousCurrencies, selectedCur
             <Tfoot borderTop={'1px'}>
               <Tr>
                 <Th>Currency</Th>
-                <Th isNumeric>Rate</Th>
-                <Th isNumeric>Change</Th>
+                <Th textAlign={'right'}>Rate</Th>
+                <Th textAlign={'right'}>Change</Th>
               </Tr>
             </Tfoot>
           </Table>
