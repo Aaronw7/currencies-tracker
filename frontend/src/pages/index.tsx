@@ -62,8 +62,6 @@ const Home = () => {
     setAdjustedPreviousCurrencies(newAdjustedPreviousCurrencies);
   }, [currencies, previousCurrencies, selectedCurrency]);
 
-  console.log('these are the adjusted currencies: ', adjustedCurrencies);
-
   return (
     <Box w={'100vw'} h={'100vh'} p={4}>
       <Grid

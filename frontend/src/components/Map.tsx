@@ -54,7 +54,8 @@ const Map: React.FC<MapProps> = ({ currencies, previousCurrencies }) => {
   }, [currencies, previousCurrencies]);
 
   useEffect(() => {
-    if (layers.length === 0 || map.current || !mapContainer.current) return;
+    // if (layers.length === 0 || map.current || !mapContainer.current) return;
+    if (!mapContainer.current) return;
 
     map.current = new mapboxgl.Map({
       container: mapContainer.current,

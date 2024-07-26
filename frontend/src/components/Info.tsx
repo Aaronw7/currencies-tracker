@@ -28,9 +28,6 @@ const Info: React.FC<InfoProps> = ({ currencies, previousCurrencies, selectedCur
 
     if (currentRate !== undefined && previousRate !== undefined) {
       const change = ((currentRate - previousRate) / previousRate) * 100;
-
-      console.log(code, previousRate, currentRate, change);
-
       return change;
     }
     return 0;
