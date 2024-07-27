@@ -47,7 +47,7 @@ const Info: React.FC<InfoProps> = ({ currencies, previousCurrencies, selectedCur
       borderTopRightRadius={{ base: 'md', md: 'none'}}
       borderBottomLeftRadius={{ base: 'none', md: 'md' }}
     >
-      <Heading size={{ base: 'md', md: 'md' }} mb={4}>
+      <Heading size={{ base: 'sm', md: 'md' }} mb={4}>
         <Box as='span' color={'#0a146e'} fontSize={{base: 'xx-large', md: 'xxx-large'}} fontFamily={'Merriweather'}>32 </Box>
         Popular Currencies
       </Heading>
