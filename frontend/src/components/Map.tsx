@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl, { GeoJSONFeature } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import { Box } from '@chakra-ui/react';
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || '';
 
@@ -146,7 +147,7 @@ const Map: React.FC<MapProps> = ({ selectedCurrency, currencies, previousCurrenc
     });
   }, [selectedCurrency, layers]);
 
-  return <div ref={mapContainer} style={{ width: '100%', height: '100%' }} />;
+  return <Box ref={mapContainer} w={'100%'} h={'100%'} borderLeftRadius={{ base: 'md', md: 'none' }} borderRightRadius={ 'md' }/>;
 };
 
 export default Map;
