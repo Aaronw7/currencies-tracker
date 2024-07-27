@@ -111,7 +111,7 @@ const Home = () => {
         </GridItem>
         <GridItem area={'select'}>
           <Flex display={{ md: 'none'}} flexDirection={'column'} justifyContent={'center'} px={12} py={4} bg={'#ffffff'} borderBottomRadius="md" boxShadow="md">
-            <Text>Select Currency</Text>
+            <Text fontWeight={'bold'}>Select Currency</Text>
             <Select
               size='sm'
               border='1px'

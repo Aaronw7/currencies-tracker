@@ -52,7 +52,7 @@ const Info: React.FC<InfoProps> = ({ currencies, previousCurrencies, selectedCur
         Popular Currencies
       </Heading>
       <Box display={{ base: 'none', md: 'flex'}} flexDirection={'column'}>
-        <Text>Select Currency</Text>
+        <Text fontWeight={'bold'}>Select Currency</Text>
         <Select
           size='sm'
           border='1px'

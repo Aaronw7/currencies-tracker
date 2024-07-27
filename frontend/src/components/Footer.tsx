@@ -11,7 +11,7 @@ const Footer = () => {
       px={3}
       borderBottomRadius={'md'}
     >
-      <Text color={'#ffffff'}>Created by Aaron W</Text>
+      <Text color={'#ffffff'} fontSize={{base: 'small', md: 'small'}} fontFamily={'Merriweather'}>Created by Aaron W</Text>
     </Flex>
   );
 };
