@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Flex, Box, Select, TableContainer, Table, Thead, Tbody, Tr, Th, Td, Tfoot, Text, Heading } from '@chakra-ui/react';
+import { TriangleDownIcon, TriangleUpIcon } from "@chakra-ui/icons";
 
 interface Currency {
   code: string;
   rate: number;
+}
+
+interface CurrencyWithChange extends Currency {
+  change: number;
 }
 
 interface InfoProps {
@@ -14,6 +19,9 @@ interface InfoProps {
 }
 
 const Info: React.FC<InfoProps> = ({ currencies, previousCurrencies, selectedCurrency, setSelectedCurrency }) => {
+  const [currencyWithChange, setCurrencyWithChange] = useState<CurrencyWithChange[]>([]);
+  const [sortConfig, setSortConfig] = useState<{ key: string; direction: 'ascending' | 'descending' } | null>(null);
+
   const handleCurrencyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCurrency(event.target.value);
   };
@@ -22,19 +30,64 @@ const Info: React.FC<InfoProps> = ({ currencies, previousCurrencies, selectedCur
     return rate.toPrecision(5);
   };
 
-  const formatChange = (code: string) => {
-    const currentRate = currencies.find(currency => currency.code === code)?.rate;
-    const previousRate = previousCurrencies.find(currency => currency.code === code)?.rate;
+  useEffect(() => {
+    const calculateChange = (code: string): number => {
+      const currentRate = currencies.find(currency => currency.code === code)?.rate;
+      const previousRate = previousCurrencies.find(currency => currency.code === code)?.rate;
 
-    if (currentRate !== undefined && previousRate !== undefined) {
-      const change = ((currentRate - previousRate) / previousRate) * 100;
-      if (change < 0 && change > -0.005) {
-        return "0.00"
+      if (currentRate !== undefined && previousRate !== undefined) {
+        const change = ((currentRate - previousRate) / previousRate) * 100;
+        return change
       }
-      return change.toFixed(2);
+      return 0;
+    };
+
+    const updatedCurrencyWithChange = currencies.map(currency => ({
+      ...currency,
+      change: calculateChange(currency.code),
+    }));
+
+    setCurrencyWithChange(updatedCurrencyWithChange);
+  }, [currencies, previousCurrencies]);
+
+  console.log('these are the sort config: ', sortConfig);
+
+  const sortedCurrencies = React.useMemo(() => {
+    if (sortConfig !== null) {
+      return [...currencyWithChange].sort((a, b) => {
+        if (a[sortConfig.key as keyof Currency] < b[sortConfig.key as keyof Currency]) {
+          return sortConfig.direction === 'ascending' ? -1 : 1;
+        }
+        if (a[sortConfig.key as keyof Currency] > b[sortConfig.key as keyof Currency]) {
+          return sortConfig.direction === 'ascending' ? 1 : -1;
+        }
+        return 0;
+      });
     }
-    return 0;
+    return currencyWithChange;
+  }, [currencyWithChange, sortConfig]);
+
+  const requestSort = (key: string) => {
+    let direction: 'ascending' | 'descending' = 'ascending';
+    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
+      direction = 'descending';
+    }
+    setSortConfig({ key, direction });
   };
+
+  const displayArrow = (key: string) => {
+    if (sortConfig?.key === key) {
+      return sortConfig.direction === 'ascending' ? <TriangleUpIcon /> : <TriangleDownIcon />;
+    }
+    return null;
+  }
+
+  const displayChange = (change: number) => {
+    if (change < 0 && change > -0.005) {
+      return "0.00";
+    }
+    return change.toFixed(2);
+  }
 
   return (
     <Flex
@@ -95,9 +148,9 @@ const Info: React.FC<InfoProps> = ({ currencies, previousCurrencies, selectedCur
           <Table variant='unstyled' size='sm'>
             <Thead position="sticky" top={0} zIndex={1} bg={'#ffffff'}>
               <Tr>
-                <Th>Currency</Th>
-                <Th textAlign={'right'}>Rate</Th>
-                <Th textAlign={'right'}>Change</Th>
+                <Th onClick={() => requestSort('code')}>Currency {displayArrow('code')}</Th>
+                <Th onClick={() => requestSort('rate')} textAlign={'right'}>{displayArrow('rate')} Rate</Th>
+                <Th onClick={() => requestSort('change')} textAlign={'right'}>{displayArrow('change')} Change</Th>
               </Tr>
               <Tr borderBottom={'1px'} bg={'#0a146e'}>
                 <Th textColor={'#ffffff'}>{selectedCurrency}</Th>
@@ -106,21 +159,21 @@ const Info: React.FC<InfoProps> = ({ currencies, previousCurrencies, selectedCur
               </Tr>
             </Thead>
             <Tbody>
-              {currencies.map((data) => {
-                const change = formatChange(data.code);
+              {sortedCurrencies.map((data) => {
+                const change = data.change;
                 return (
                   <Tr key={data.code}>
                     <Td>{data.code}</Td>
                     <Td textAlign={'right'}>{formatRate(data.rate)}</Td>
                     <Td color={
-                      Number(change) >= 0.5 ? '#3e9e3e' :
-                      Number(change) >= 0.01 ? '#65c24c' :
-                      Number(change) <= -0.5 ? '#b51a28' :
-                      Number(change) <= -0.01 ? '#c24c65' :
+                      Number(displayChange(change)) >= 0.5 ? '#3e9e3e' :
+                      Number(displayChange(change)) >= 0.01 ? '#65c24c' :
+                      Number(displayChange(change)) <= -0.5 ? '#b51a28' :
+                      Number(displayChange(change)) <= -0.01 ? '#c24c65' :
                       '#a3a3a3'}
                       textAlign={'right'}
                     >
-                      {`${change}%`}
+                      {`${displayChange(change)}%`}
                     </Td>
                   </Tr>
                 );
