@@ -10,14 +10,49 @@ interface Currency {
 }
 
 interface MapProps {
+  selectedCurrency: string;
   currencies: Currency[];
   previousCurrencies: Currency[];
 }
 
-const Map: React.FC<MapProps> = ({ currencies, previousCurrencies }) => {
+interface Coordinates {
+  mobile: [number, number];
+  desktop: [number, number];
+}
+
+interface Zoom {
+  mobile: number;
+  desktop: number;
+}
+
+interface CurrencyConfig {
+  center: Coordinates;
+  zoom: Zoom;
+}
+
+interface Config {
+  [key: string]: CurrencyConfig;
+}
+
+const currencyConfig: Config = {
+  AUD: { center: { mobile: [120, -15], desktop: [90, -5] }, zoom: { mobile: 1, desktop: 1.7 } },
+  BGN: { center: { mobile: [25, 45], desktop: [15, 50] }, zoom: { mobile: 2.5, desktop: 2.5 } },
+  BRL: { center: { mobile: [-55, 10], desktop: [-60, 25] }, zoom: { mobile: 0.8, desktop: 1.8 } },
+  CAD: { center: { mobile: [-85, 55], desktop: [-60, 45] }, zoom: { mobile: 1, desktop: 1.3 } },
+  CHF: { center: { mobile: [25, 45], desktop: [12, 50] }, zoom: { mobile: 2.5, desktop: 2.8 } },
+  CZK: { center: { mobile: [25, 45], desktop: [15, 50] }, zoom: { mobile: 2.5, desktop: 2.5 } },
+  HRK: { center: { mobile: [25, 45], desktop: [15, 50] }, zoom: { mobile: 2.5, desktop: 2.5 } },
+  USD: { center: { mobile: [-100, 40], desktop: [-35, 40] }, zoom: { mobile: 1, desktop: 1.5 } },
+  // Default center and zoom
+  default: { center: { mobile: [-35, 30], desktop: [-20, 20] }, zoom: { mobile: 0, desktop: 1 } }
+};
+
+const Map: React.FC<MapProps> = ({ selectedCurrency, currencies, previousCurrencies }) => {
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const map = useRef<mapboxgl.Map | null>(null);
   const [layers, setLayers] = useState<{ id: string; color: string; hoverColor: string }[]>([]);
+
+  console.log('selected currency: ', selectedCurrency);
 
   useEffect(() => {
     const formatChange = (code: string) => {
@@ -59,13 +94,14 @@ const Map: React.FC<MapProps> = ({ currencies, previousCurrencies }) => {
   }, [currencies, previousCurrencies]);
 
   useEffect(() => {
-    // if (layers.length === 0 || map.current || !mapContainer.current) return;
     if (layers.length === 0 || !mapContainer.current) return;
 
     const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
     const isMobile = window.innerWidth < rootFontSize * 48;
-    const center: [number, number] = isMobile ? [-35, 30] : [-20, 20];
-    const zoom = isMobile ? 0 : 1;
+
+    const currencySettings = currencyConfig[selectedCurrency] || currencyConfig.default;
+    const center = isMobile ? currencySettings.center.mobile : currencySettings.center.desktop;
+    const zoom = isMobile ? currencySettings.zoom.mobile : currencySettings.zoom.desktop;
 
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
@@ -108,7 +144,7 @@ const Map: React.FC<MapProps> = ({ currencies, previousCurrencies }) => {
         });
       });
     });
-  }, [layers]);
+  }, [selectedCurrency, layers]);
 
   return <div ref={mapContainer} style={{ width: '100%', height: '100%' }} />;
 };

@@ -97,7 +97,7 @@ const Home = () => {
           <Header />
         </GridItem>
         <GridItem area={'map'} minH={{ base: '250px', md: '500px' }}>
-          <Map currencies={adjustedCurrencies} previousCurrencies={adjustedPreviousCurrencies} />
+          <Map selectedCurrency={selectedCurrency} currencies={adjustedCurrencies} previousCurrencies={adjustedPreviousCurrencies} />
         </GridItem>
         <GridItem area={'info'}>
           <Info currencies={adjustedCurrencies} previousCurrencies={adjustedPreviousCurrencies} selectedCurrency={selectedCurrency} setSelectedCurrency={setSelectedCurrency}/>
