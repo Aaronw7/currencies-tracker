@@ -133,7 +133,7 @@ const Home = () => {
             </Select>
           </Flex>
         </GridItem>
-        <GridItem area={'map'} minH={{ base: '250px', md: '500px' }}>
+        <GridItem area={'map'}>
           <Map selectedCurrency={selectedCurrency} currencies={adjustedCurrencies} previousCurrencies={adjustedPreviousCurrencies} />
         </GridItem>
         <GridItem area={'info'}>
