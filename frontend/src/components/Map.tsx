@@ -40,10 +40,35 @@ const currencyConfig: Config = {
   BGN: { center: { mobile: [25, 45], desktop: [15, 50] }, zoom: { mobile: 2.5, desktop: 2.5 } },
   BRL: { center: { mobile: [-55, 10], desktop: [-60, 25] }, zoom: { mobile: 0.8, desktop: 1.8 } },
   CAD: { center: { mobile: [-85, 55], desktop: [-60, 45] }, zoom: { mobile: 1, desktop: 1.3 } },
-  CHF: { center: { mobile: [25, 45], desktop: [12, 50] }, zoom: { mobile: 2.5, desktop: 2.8 } },
-  CZK: { center: { mobile: [25, 45], desktop: [15, 50] }, zoom: { mobile: 2.5, desktop: 2.5 } },
-  HRK: { center: { mobile: [25, 45], desktop: [15, 50] }, zoom: { mobile: 2.5, desktop: 2.5 } },
-  USD: { center: { mobile: [-100, 40], desktop: [-35, 40] }, zoom: { mobile: 1, desktop: 1.5 } },
+  CHF: { center: { mobile: [10, 50], desktop: [12, 50] }, zoom: { mobile: 2.5, desktop: 2.8 } },
+  CNY: { center: { mobile: [120, 30], desktop: [90, 35] }, zoom: { mobile: 1, desktop: 1.7 } },
+  CZK: { center: { mobile: [15, 50], desktop: [15, 50] }, zoom: { mobile: 2.5, desktop: 2.5 } },
+  DKK: { center: { mobile: [-5, 55], desktop: [-10, 50] }, zoom: { mobile: 1.2, desktop: 2 } },
+  EUR: { center: { mobile: [15, 50], desktop: [-10, 50] }, zoom: { mobile: 1, desktop: 1.2 } },
+  GBP: { center: { mobile: [-5, 55], desktop: [-10, 50] }, zoom: { mobile: 1.2, desktop: 1.9 } },
+  HKD: { center: { mobile: [115, 20], desktop: [110, 23] }, zoom: { mobile: 3, desktop: 4 } },
+  HRK: { center: { mobile: [20, 45], desktop: [15, 45] }, zoom: { mobile: 2.5, desktop: 2.5 } },
+  HUF: { center: { mobile: [20, 47], desktop: [16, 47] }, zoom: { mobile: 3.1, desktop: 3.1 } },
+  IDR: { center: { mobile: [120, 0], desktop: [95, 5] }, zoom: { mobile: 1, desktop: 1.3 } },
+  ILS: { center: { mobile: [30, 35], desktop: [27, 42] }, zoom: { mobile: 3, desktop: 3.5 } },
+  INR: { center: { mobile: [65, 35], desktop: [70, 30] }, zoom: { mobile: 1, desktop: 1.5 } },
+  ISK: { center: { mobile: [-5, 55], desktop: [-10, 50] }, zoom: { mobile: 1.2, desktop: 2 } },
+  JPY: { center: { mobile: [125, 40], desktop: [110, 30] }, zoom: { mobile: 2, desktop: 2 } },
+  KRW: { center: { mobile: [125, 37], desktop: [110, 30] }, zoom: { mobile: 2, desktop: 2 } },
+  MXN: { center: { mobile: [-90, 27], desktop: [-35, 27] }, zoom: { mobile: 1, desktop: 1.5 } },
+  MYR: { center: { mobile: [120, 0], desktop: [95, 5] }, zoom: { mobile: 1, desktop: 1.6 } },
+  NOK: { center: { mobile: [-5, 55], desktop: [-10, 50] }, zoom: { mobile: 1.2, desktop: 2 } },
+  NZD: { center: { mobile: [125, -17], desktop: [115, -7] }, zoom: { mobile: 1, desktop: 1.7 } },
+  PHP: { center: { mobile: [130, 0], desktop: [95, 5] }, zoom: { mobile: 1, desktop: 1.6 } },
+  PLN: { center: { mobile: [20, 50], desktop: [15, 50] }, zoom: { mobile: 2.5, desktop: 2.5 } },
+  RON: { center: { mobile: [22, 50], desktop: [15, 50] }, zoom: { mobile: 2, desktop: 2.5 } },
+  RUB: { center: { mobile: [50, 50], desktop: [55, 45] }, zoom: { mobile: 1, desktop: 1 } },
+  SEK: { center: { mobile: [22, 55], desktop: [15, 55] }, zoom: { mobile: 1.3, desktop: 2 } },
+  SGD: { center: { mobile: [110, 5], desktop: [105, 0] }, zoom: { mobile: 3, desktop: 3 } },
+  THB: { center: { mobile: [110, 15], desktop: [105, 10] }, zoom: { mobile: 1.2, desktop: 2.2 } },
+  TRY: { center: { mobile: [30, 45], desktop: [20, 45] }, zoom: { mobile: 2.3, desktop: 2.5 } },
+  USD: { center: { mobile: [-80, 35], desktop: [-35, 40] }, zoom: { mobile: 1, desktop: 1.3 } },
+  ZAR: { center: { mobile: [-5, 0], desktop: [20, 25] }, zoom: { mobile: 1, desktop: 1 } },
   // Default center and zoom
   default: { center: { mobile: [-35, 30], desktop: [-20, 20] }, zoom: { mobile: 0, desktop: 1 } }
 };
@@ -52,8 +77,6 @@ const Map: React.FC<MapProps> = ({ selectedCurrency, currencies, previousCurrenc
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const map = useRef<mapboxgl.Map | null>(null);
   const [layers, setLayers] = useState<{ id: string; color: string; hoverColor: string }[]>([]);
-
-  console.log('selected currency: ', selectedCurrency);
 
   useEffect(() => {
     const formatChange = (code: string) => {
@@ -95,6 +118,10 @@ const Map: React.FC<MapProps> = ({ selectedCurrency, currencies, previousCurrenc
   }, [currencies, previousCurrencies]);
 
   useEffect(() => {
+    if (map.current) {
+      map.current.remove();
+      map.current = null;
+    }
     if (layers.length === 0 || !mapContainer.current) return;
 
     const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
