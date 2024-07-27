@@ -12,6 +12,8 @@
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
+    "@fontsource/inter": "^5.0.19",
+    "@fontsource/merriweather": "^5.0.13",
     "axios": "^1.7.2",
     "framer-motion": "^11.3.8",
     "mapbox-gl": "^3.5.2",
