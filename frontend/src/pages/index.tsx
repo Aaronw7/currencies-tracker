@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Flex, Grid, GridItem, Text, Select } from '@chakra-ui/react';
+import { Box, Flex, Grid, GridItem, Text, Select, Spinner } from '@chakra-ui/react';
 import axios from 'axios';
 import Header from '@/components/Header';
 import Map from '@/components/Map';
@@ -21,6 +21,7 @@ const Home = () => {
   const [previousCurrencies, setPreviousCurrencies] = useState<Currency[]>([]);
   const [adjustedCurrencies, setAdjustedCurrencies] = useState<Currency[]>([]);
   const [adjustedPreviousCurrencies, setAdjustedPreviousCurrencies] = useState<Currency[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCurrencies = async () => {
@@ -37,6 +38,8 @@ const Home = () => {
         const { rates: previousRates } = previousResponse.data;
         const formattedPreviousRates: Currency[] = Object.entries(previousRates).map(([code, rate]) => ({ code, rate: rate as number }));
         setPreviousCurrencies(formattedPreviousRates);
+
+        setLoading(false);
 
       } catch (error) {
         console.error('Failed to fetch currencies', error);
@@ -63,6 +66,15 @@ const Home = () => {
     setAdjustedCurrencies(newAdjustedCurrencies);
     setAdjustedPreviousCurrencies(newAdjustedPreviousCurrencies);
   }, [currencies, previousCurrencies, selectedCurrency]);
+
+  if (loading) {
+    return (
+      <Flex w={'100vw'} h={'100vh'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'} bg={'#202020'}>
+        <Text>Please hold while our servers wake up</Text>
+        <Spinner size={'xl'} color={'white'} />
+      </Flex>
+    );
+  }
 
   return (
     <Box w={'100vw'} h={'100vh'} p={3} bg={'#202020'} overflowY={'scroll'}>
