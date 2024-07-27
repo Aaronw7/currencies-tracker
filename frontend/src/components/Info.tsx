@@ -78,8 +78,8 @@ const Info: React.FC<InfoProps> = ({ currencies, previousCurrencies, selectedCur
           overflowY={'scroll'}
           css={{
             '&::-webkit-scrollbar': { display: 'none' },
-            '-ms-overflow-style': 'none',
-            'scrollbar-width': 'none'
+            msOverflowStyle: 'none',
+            scrollbarWidth: 'none'
           }}
         >
           <Table variant='unstyled' size='sm'>
