@@ -37,40 +37,50 @@ const Info: React.FC<InfoProps> = ({ currencies, previousCurrencies, selectedCur
   };
 
   return (
-    <Flex direction={'column'} justifyContent={'center'} h={'100%'} p={4} bg="#ffffff" borderRadius="md" boxShadow="md">
+    <Flex
+      direction={'column'}
+      justifyContent={'center'}
+      h={'100%'}
+      p={4}
+      bg="#ffffff"
+      borderTopLeftRadius={'md'}
+      borderTopRightRadius={{ base: 'md', md: 'none'}}
+      borderBottomLeftRadius={{ base: 'none', md: 'md' }}
+    >
       <Heading size={{ base: 'md', md: 'md' }} mb={4}>
-        <Box as='span' color={'#0a146e'} fontSize={'xxx-large'}>32 </Box>
+        <Box as='span' color={'#0a146e'} fontSize={{base: 'xx-large', md: 'xxx-large'}}>32 </Box>
         Popular Currencies
       </Heading>
-      <Text>Select Currency</Text>
-      <Select
-        size='sm'
-        border='1px'
-        borderColor='gray.500'
-        mb={4}
-        onChange={handleCurrencyChange}
-        value={selectedCurrency}
-        _hover={{
-          borderColor: 'gray.700',
-          cursor: 'pointer'
-        }}
-        _focus={{
-          boxShadow: '0 0 0 1px gray.500',
-          borderColor: 'gray.500',
-        }}
-      >
-        {currencies.map((choice) => (
-          <option value={choice.code} key={choice.code}>{choice.code}</option>
-        ))}
-      </Select>
+      <Box display={{ base: 'none', md: 'flex'}} flexDirection={'column'}>
+        <Text>Select Currency</Text>
+        <Select
+          size='sm'
+          border='1px'
+          borderColor='gray.500'
+          mb={4}
+          onChange={handleCurrencyChange}
+          value={selectedCurrency}
+          _hover={{
+            borderColor: 'gray.700',
+            cursor: 'pointer'
+          }}
+          _focus={{
+            boxShadow: '0 0 0 1px gray.500',
+            borderColor: 'gray.500',
+          }}
+        >
+          {currencies.map((choice) => (
+            <option value={choice.code} key={choice.code}>{choice.code}</option>
+          ))}
+        </Select>
+      </Box>
       <Box
         flex={1}
         w={'100%'}
-        h={'100%'}
         maxH={{ base: '250px', md: '500px' }}
         border={'1px'}
-        borderColor={'#000000'}
-        borderRadius={'5px'}
+        borderColor={'gray.500'}
+        borderRadius={'3px'}
         overflow={'hidden'}
       >
         <TableContainer

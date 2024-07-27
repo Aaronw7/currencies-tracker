@@ -9,6 +9,7 @@ const Footer = () => {
       h={'100%'}
       bg={'#0a146e'}
       px={3}
+      borderBottomRadius={'md'}
     >
       <Text color={'#ffffff'}>Created by Aaron W</Text>
     </Flex>

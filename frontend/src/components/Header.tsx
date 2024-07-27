@@ -10,6 +10,7 @@ const Header = () => {
       h={'100%'}
       bg={'#0a146e'}
       p={2}
+      borderTopRadius={'md'}
     >
       <Heading color={'#ffffff'}>CURRENCY CONVERTER</Heading>
       <Text color={'#ffffff'} mt={{ base: 0, md: 5 }}>Updated Daily</Text>

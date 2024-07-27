@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Grid, GridItem } from '@chakra-ui/react';
+import { Box, Flex, Grid, GridItem, Text, Select } from '@chakra-ui/react';
 import axios from 'axios';
 import Header from '@/components/Header';
 import Map from '@/components/Map';
@@ -65,11 +65,12 @@ const Home = () => {
   }, [currencies, previousCurrencies, selectedCurrency]);
 
   return (
-    <Box w={'100vw'} h={'100vh'} p={3} bg={'#202020'}>
+    <Box w={'100vw'} h={'100vh'} p={3} bg={'#202020'} overflowY={'scroll'}>
       <Grid
         templateAreas={{
           base: `
             "header"
+            "select"
             "map"
             "info"
             "footer"
@@ -81,7 +82,7 @@ const Home = () => {
           `,
         }}
         gridTemplateRows={{
-          base: '80px 1fr 1fr 35px',
+          base: '80px 88px 1fr 1fr 35px',
           md: '50px 1fr 35px',
         }}
         gridTemplateColumns={{
@@ -95,6 +96,30 @@ const Home = () => {
       >
         <GridItem area={'header'}>
           <Header />
+        </GridItem>
+        <GridItem area={'select'}>
+          <Flex display={{ md: 'none'}} flexDirection={'column'} justifyContent={'center'} px={12} py={4} bg={'#ffffff'} borderBottomRadius="md" boxShadow="md">
+            <Text>Select Currency</Text>
+            <Select
+              size='sm'
+              border='1px'
+              borderColor='gray.500'
+              onChange={(e) => setSelectedCurrency(e.target.value)}
+              value={selectedCurrency}
+              _hover={{
+                borderColor: 'gray.700',
+                cursor: 'pointer'
+              }}
+              _focus={{
+                boxShadow: '0 0 0 1px gray.500',
+                borderColor: 'gray.500',
+              }}
+            >
+              {currencies.map((choice) => (
+                <option value={choice.code} key={choice.code}>{choice.code}</option>
+              ))}
+            </Select>
+          </Flex>
         </GridItem>
         <GridItem area={'map'} minH={{ base: '250px', md: '500px' }}>
           <Map selectedCurrency={selectedCurrency} currencies={adjustedCurrencies} previousCurrencies={adjustedPreviousCurrencies} />
