@@ -196,18 +196,20 @@ const Map: React.FC<MapProps> = ({ selectedCurrency, currencies, previousCurrenc
           const features = e.features as GeoJSONFeature[];
           const feature = features && features[0];
 
+          console.log('this is the feature: ', feature);
+
           if (feature) {
             const layerInfo = layers.find(layer => layer.id === feature.layer?.id);
             const popupContent = `
-              <div style="font-family: Arial, sans-serif; font-size: 14px; color: #333;">
-                <h3 style="margin: 0 0 5px 0; font-size: 16px;">${layerInfo?.id}</h3>
-                <p style="margin: 0;">Change: ${layerInfo?.change}</p>
+              <div style="padding: 5px">
+                <h3 style="margin: 0 0 5px 0; font-size: 18px;">${feature.properties?.name_en} (${layerInfo?.id})</h3>
+                <p style="font-size: 13px;">24h Change: <span style="color: ${layerInfo?.hoverColor}">${layerInfo?.change}</span></p>
               </div>
             `;
             if (popupRef.current) {
               popupRef.current.remove();
             }
-            popupRef.current = new mapboxgl.Popup({ closeOnClick: true })
+            popupRef.current = new mapboxgl.Popup({ closeButton: false })
               .setLngLat(e.lngLat)
               .setHTML(popupContent)
               .addTo(map.current);
