@@ -13,6 +13,10 @@ app.use(express.json());
 // Routes
 app.use('/currency', routes);
 
+app.get('/keep-alive', (req, res) => {
+  res.send('Server is alive!');
+});
+
 sequelize.sync().then(() => {
   console.log('Database connected');
   app.listen(PORT, () => {
