@@ -10,6 +10,13 @@ interface Currency {
   rate: number;
 }
 
+interface Layer {
+  id: string;
+  color: string;
+  hoverColor: string;
+  change: string;
+}
+
 interface MapProps {
   selectedCurrency: string;
   currencies: Currency[];
@@ -76,7 +83,8 @@ const currencyConfig: Config = {
 const Map: React.FC<MapProps> = ({ selectedCurrency, currencies, previousCurrencies }) => {
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const map = useRef<mapboxgl.Map | null>(null);
-  const [layers, setLayers] = useState<{ id: string; color: string; hoverColor: string }[]>([]);
+  const [layers, setLayers] = useState<Layer[]>([]);
+  const popupRef = useRef<mapboxgl.Popup | null>(null);
 
   useEffect(() => {
     const formatChange = (code: string) => {
@@ -89,6 +97,13 @@ const Map: React.FC<MapProps> = ({ selectedCurrency, currencies, previousCurrenc
       }
       return 0;
     };
+
+    const displayChange = (change: number) => {
+      if (change < 0 && change > -0.005) {
+        return "0.00";
+      }
+      return change.toFixed(2);
+    }
 
     const newLayerColors = currencies.map((currency) => {
       const change = formatChange(currency.code);
@@ -110,7 +125,8 @@ const Map: React.FC<MapProps> = ({ selectedCurrency, currencies, previousCurrenc
       return {
         id: currency.code,
         color: color,
-        hoverColor: hoverColor
+        hoverColor: hoverColor,
+        change: `${displayChange(change)}%`
       };
     });
 
@@ -148,11 +164,31 @@ const Map: React.FC<MapProps> = ({ selectedCurrency, currencies, previousCurrenc
 
         map.current.setPaintProperty(layerId, 'fill-color', layer.color);
 
-        map.current.on('mouseenter', layerId, () => {
+        map.current.on('mouseenter', layerId, (e) => {
           if (!map.current) return;
+          const features = e.features as GeoJSONFeature[];
+          const feature = features && features[0];
+          console.log('enter feature: ', feature.layer?.id);
 
           map.current.setPaintProperty(layerId, 'fill-color', layer.hoverColor);
           map.current.getCanvas().style.cursor = 'pointer';
+
+          if (feature) {
+            const layerInfo = layers.find(layer => layer.id === feature.layer?.id);
+            const popupContent = `
+              <div>
+                <h3>${layerInfo?.id}</h3>
+                <p>Change: ${layerInfo?.change}</p>
+              </div>
+            `;
+            if (popupRef.current) {
+              popupRef.current.remove();
+            }
+            popupRef.current = new mapboxgl.Popup({ closeButton: false })
+              .setLngLat(e.lngLat)
+              .setHTML(popupContent)
+              .addTo(map.current);
+          }
         });
 
         map.current.on('mouseleave', layerId, (e) => {
@@ -169,6 +205,10 @@ const Map: React.FC<MapProps> = ({ selectedCurrency, currencies, previousCurrenc
           }
 
           map.current.setPaintProperty(layerId, 'fill-color', layer.color);
+          if (popupRef.current) {
+            popupRef.current.remove();
+            popupRef.current = null;
+          }
         });
       });
     });

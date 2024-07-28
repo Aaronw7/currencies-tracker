@@ -50,8 +50,6 @@ const Info: React.FC<InfoProps> = ({ currencies, previousCurrencies, selectedCur
     setCurrencyWithChange(updatedCurrencyWithChange);
   }, [currencies, previousCurrencies]);
 
-  console.log('these are the sort config: ', sortConfig);
-
   const sortedCurrencies = React.useMemo(() => {
     if (sortConfig !== null) {
       return [...currencyWithChange].sort((a, b) => {
