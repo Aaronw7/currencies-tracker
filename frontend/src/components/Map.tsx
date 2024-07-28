@@ -168,7 +168,6 @@ const Map: React.FC<MapProps> = ({ selectedCurrency, currencies, previousCurrenc
           if (!map.current) return;
           const features = e.features as GeoJSONFeature[];
           const feature = features && features[0];
-          console.log('enter feature: ', feature.layer?.id);
 
           map.current.setPaintProperty(layerId, 'fill-color', layer.hoverColor);
           map.current.getCanvas().style.cursor = 'pointer';
