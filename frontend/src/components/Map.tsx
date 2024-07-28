@@ -164,30 +164,11 @@ const Map: React.FC<MapProps> = ({ selectedCurrency, currencies, previousCurrenc
 
         map.current.setPaintProperty(layerId, 'fill-color', layer.color);
 
-        map.current.on('mouseenter', layerId, (e) => {
+        map.current.on('mouseenter', layerId, () => {
           if (!map.current) return;
-          const features = e.features as GeoJSONFeature[];
-          const feature = features && features[0];
 
           map.current.setPaintProperty(layerId, 'fill-color', layer.hoverColor);
           map.current.getCanvas().style.cursor = 'pointer';
-
-          if (feature) {
-            const layerInfo = layers.find(layer => layer.id === feature.layer?.id);
-            const popupContent = `
-              <div>
-                <h3>${layerInfo?.id}</h3>
-                <p>Change: ${layerInfo?.change}</p>
-              </div>
-            `;
-            if (popupRef.current) {
-              popupRef.current.remove();
-            }
-            popupRef.current = new mapboxgl.Popup({ closeButton: false })
-              .setLngLat(e.lngLat)
-              .setHTML(popupContent)
-              .addTo(map.current);
-          }
         });
 
         map.current.on('mouseleave', layerId, (e) => {
@@ -207,6 +188,29 @@ const Map: React.FC<MapProps> = ({ selectedCurrency, currencies, previousCurrenc
           if (popupRef.current) {
             popupRef.current.remove();
             popupRef.current = null;
+          }
+        });
+
+        map.current.on('click', layerId, (e) => {
+          if (!map.current) return;
+          const features = e.features as GeoJSONFeature[];
+          const feature = features && features[0];
+
+          if (feature) {
+            const layerInfo = layers.find(layer => layer.id === feature.layer?.id);
+            const popupContent = `
+              <div style="font-family: Arial, sans-serif; font-size: 14px; color: #333;">
+                <h3 style="margin: 0 0 5px 0; font-size: 16px;">${layerInfo?.id}</h3>
+                <p style="margin: 0;">Change: ${layerInfo?.change}</p>
+              </div>
+            `;
+            if (popupRef.current) {
+              popupRef.current.remove();
+            }
+            popupRef.current = new mapboxgl.Popup({ closeOnClick: true })
+              .setLngLat(e.lngLat)
+              .setHTML(popupContent)
+              .addTo(map.current);
           }
         });
       });
