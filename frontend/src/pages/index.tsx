@@ -71,7 +71,7 @@ const Home = () => {
     return (
       <Flex w={'100vw'} h={'100vh'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'} bg={'#202020'}>
         <Text color={'white'} mb={3}>Please hold while our servers wake up</Text>
-        <Spinner size={'xl'} color={'white'} />
+        <Spinner size={'lg'} color={'white'} />
       </Flex>
     );
   }
