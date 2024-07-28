@@ -24,6 +24,35 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const pingKeepAlive = async () => {
+      try {
+        await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/keep-alive`);
+        console.log('Server is alive!');
+      } catch (error) {
+        console.error('Failed to ping keep-alive endpoint', error);
+      }
+    };
+
+    const shouldPing = () => {
+      const now = new Date();
+      const currentHour = now.getHours();
+      return currentHour >= 8 && currentHour < 23;
+    };
+
+    const schedulePing = () => {
+      if (shouldPing()) {
+        pingKeepAlive();
+      }
+    };
+
+    const intervalId = setInterval(schedulePing, 300000);
+
+    schedulePing();
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  useEffect(() => {
     const fetchCurrencies = async () => {
       try {
         const [latestResponse, previousResponse] = await Promise.all([
