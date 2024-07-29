@@ -31,7 +31,7 @@ Currencies are updated daily and stored in a PostgreSQL database
 
 ### Links
 
-- [Currency Converter](https://currency-converter-steel-tau.vercel.app/)
+[Currency Converter](https://currency-converter-steel-tau.vercel.app/)
 
 ### Screenshot
 
