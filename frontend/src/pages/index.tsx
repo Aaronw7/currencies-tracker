@@ -5,6 +5,7 @@ import Header from '@/components/Header';
 import Map from '@/components/Map';
 import Info from '@/components/Info';
 import Footer from '@/components/Footer';
+import Meta from '@/components/Meta';
 
 interface Currency {
   code: string;
@@ -107,6 +108,7 @@ const Home = () => {
 
   return (
     <Box w={'100vw'} h={'100vh'} p={3} bg={'#202020'} overflowY={'scroll'}>
+      <Meta />
       <Grid
         templateAreas={{
           base: `
