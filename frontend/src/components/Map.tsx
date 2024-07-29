@@ -106,7 +106,7 @@ const Map: React.FC<MapProps> = ({ selectedCurrency, currencies, previousCurrenc
     }
 
     const newLayerColors = currencies.map((currency) => {
-      const change = formatChange(currency.code);
+      const change = Number(displayChange(formatChange(currency.code)));
       let color = '#bdbdbd';
       let hoverColor = '#a3a3a3'
       if (change >= 0.5) {
