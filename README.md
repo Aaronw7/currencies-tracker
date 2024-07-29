@@ -26,6 +26,7 @@ Users should be able to:
 - View the optimal layout depending on their device's screen size
 - Select desired currency and display the respective conversion rates and 24H changes of other currencies
 - Click on available countries on the map to view row information
+- Click on table columns to sort by column (asc/desc)
 
 Currencies are updated daily and stored in a PostgreSQL database
 
