@@ -41,8 +41,6 @@ Currencies are updated daily and stored in a PostgreSQL database
 
 ### Built with
 
-- Flexbox
-- Mobile-first workflow
 - [React](https://reactjs.org/) - JS library
 - [Next.js](https://nextjs.org/) - React framework
 - [Chakra UI](https://v2.chakra-ui.com/) - Modular and accessible component library
