@@ -35,7 +35,7 @@ Currencies are updated daily and stored in a PostgreSQL database
 
 ### Screenshot
 
-![Landing Page](https://i.imgur.com/ZobPzck.png)
+![Landing Page](https://i.imgur.com/8FH1AuG.png)
 
 ## My process
 
