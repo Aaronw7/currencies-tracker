@@ -26,7 +26,7 @@ exports.getPreviousCurrency = asyncHandler(async (req, res, next) => {
           [Op.lte]: pastDate,
         },
       },
-      order: [['date', 'ASC']]
+      order: [['date', 'DESC']]
     });
 
     if (data) {
