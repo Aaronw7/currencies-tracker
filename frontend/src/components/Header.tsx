@@ -13,7 +13,7 @@ const Header = () => {
       py={{ base: 4, md: 2 }}
       borderTopRadius={'md'}
     >
-      <Heading color={'#ffffff'} fontFamily={'Merriweather'} fontSize={{ base: 'x-large', md: 'xx-large' }}>CURRENCY CONVERTER</Heading>
+      <Heading color={'#ffffff'} fontFamily={'Merriweather'} fontSize={{ base: 'x-large', md: 'xx-large' }}>CURRENCIES TRACKER</Heading>
       <Text color={'#ffffff'} mt={{ base: 0, md: 5 }} fontSize={{ base: 'small', md: 'medium'}}>Updated Daily</Text>
     </Flex>
   );

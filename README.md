@@ -1,4 +1,4 @@
-# Currency Converter
+# Currencies Tracker
 
 This is a personal project to showcase proficiencies in the following technologies:
 Next.js, Typescript, Chakra UI, Express, PostgreSQL
@@ -31,7 +31,7 @@ Currencies are updated daily and stored in a PostgreSQL database
 
 ### Links
 
-[Currency Converter](https://currency-converter-steel-tau.vercel.app/)
+[Currencies Tracker](https://currency-converter-steel-tau.vercel.app/)
 
 ### Screenshot
 
