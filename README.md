@@ -32,7 +32,7 @@ Currencies are updated daily and stored in a PostgreSQL database
 
 ### Links
 
-[Currencies Tracker](https://currency-converter-steel-tau.vercel.app/)
+[Currencies Tracker](https://www.currenciestracker.com/)
 
 ### Screenshot
 
