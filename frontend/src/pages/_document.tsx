@@ -6,11 +6,8 @@ export default function Document() {
       <Head>
         <link rel="icon" href="/favicon.png" sizes="any" color="white" />
         <link
-          rel="preload"
-          href="/_next/static/fonts/merriweather-latin-400-normal.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
+          href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap"
+          rel="stylesheet"
         />
         <meta name="author" content="Aaron W" />
       </Head>
