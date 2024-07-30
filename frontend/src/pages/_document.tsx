@@ -7,7 +7,7 @@ export default function Document() {
         <link rel="icon" href="/favicon.png" sizes="any" color="white" />
         <link
           rel="preload"
-          href="/path/to/font.woff2"
+          href="/_next/static/fonts/merriweather-latin-400-normal.woff2"
           as="font"
           type="font/woff2"
           crossOrigin="anonymous"
